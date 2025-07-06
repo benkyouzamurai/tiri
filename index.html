@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>地理クイズ</title>
   <style>
+    body {
+      font-size: 18px; /* 文字を大きく */
+      padding: 10px;
+      background: #fff;
+      color: #000;
+      font-family: sans-serif;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
     .question {
       margin-bottom: 20px;
     }
@@ -11,9 +22,13 @@
       display: none;
       color: green;
       font-weight: bold;
-      margin-top: 5px;
+      margin-top: 10px;
+      font-size: 18px; /* 答えも大きく */
     }
     .show-button {
+      padding: 12px 20px; /* ボタン大きめ */
+      font-size: 18px;
+      cursor: pointer;
       margin-top: 5px;
     }
   </style>
@@ -26,11 +41,12 @@
     fetch('地理一問一答 - シート1.csv')
       .then(response => response.text())
       .then(csvText => {
-        const lines = csvText.split('\n').slice(1); // 1行目はヘッダー
+        const lines = csvText.split('\n').slice(1);
         const container = document.getElementById('quiz-container');
         container.innerHTML = '';
 
         lines.forEach((line, index) => {
+          if (!line.trim()) return;
           const [question, answer] = line.split(',').map(s => s.trim().replace(/^"|"$/g, ''));
 
           const qDiv = document.createElement('div');
