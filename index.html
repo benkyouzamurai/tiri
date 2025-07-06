@@ -56,15 +56,24 @@
   <div id="quiz-container">読み込み中...</div>
 
   <script>
+    // 配列シャッフル関数
+    function shuffleArray(array) {
+      for(let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
     fetch('地理一問一答 - シート1.csv')
       .then(response => response.text())
       .then(csvText => {
-        const lines = csvText.split('\n').slice(1);
+        let lines = csvText.split('\n').slice(1).filter(line => line.trim() !== '');
+        shuffleArray(lines);  // ここでランダムに並べ替え
+
         const container = document.getElementById('quiz-container');
         container.innerHTML = '';
 
         lines.forEach((line, index) => {
-          if (!line.trim()) return;
           const [question, answer] = line.split(',').map(s => s.trim().replace(/^"|"$/g, ''));
 
           const qDiv = document.createElement('div');
